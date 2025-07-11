@@ -6,7 +6,7 @@ import NowPaymentsApi from '@nowpaymentsio/nowpayments-api-js';
 import { PaystackButton } from 'react-paystack';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
-import './payments.scss'
+import './Payments.scss'
 import { AuthContext } from '../../AuthContext';
 import { PriceContext } from '../../PriceContext';
 
