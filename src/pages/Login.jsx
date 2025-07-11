@@ -1,3 +1,4 @@
+// Login.jsx
 import React, { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import { signInUser } from '../firebase';
 import { AuthContext } from '../AuthContext';
@@ -16,29 +17,58 @@ export const Login = () => {
     }
 
     useEffect(() => {
-      currentUser && window.history.back()
-      error && setTimeout(() => {
-        setError(null);
-      }, 2000);
+        currentUser && window.history.back()
+        error && setTimeout(() => {
+            setError(null);
+        }, 2000);
     }, [error, currentUser]);
 
     useLayoutEffect(() => {
         window.scrollTo(0, 0)
     });
-    return (
-        <div className='login'>
-            <AppHelmet title={"Login"} location={'/login'}/>
-            <form onSubmit={handleSubmit}>
-                <h2>Welcome Back</h2>
-                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder='enter email' required/>
-                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder='password' required/>
-                <button type="submit" title="login" className='btn' aria-label="login">LOGIN</button>
-                {
-                    error && <h4 className='error'>{error}Try again</h4>
-                }
 
-                <div className="text">Don't have an account?&emsp;|&emsp;<NavLink to='/register'>Sign Up &raquo;</NavLink>  </div>
-            </form>
+    return (
+        <div className='auth-container'>
+            <AppHelmet title={"Login"} location={'/login'} />
+            <div className="auth-glass">
+                <div className="auth-header">
+                    <h2>Welcome Back</h2>
+                    <p>Sign in to access your account</p>
+                </div>
+
+                <form onSubmit={handleSubmit} className="auth-form">
+                    <div className="form-group">
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder='Email address'
+                            required
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder='Password'
+                            required
+                        />
+                    </div>
+
+                    {error && <div className="auth-error">{error} - Please try again</div>}
+
+                    <button type="submit" className="auth-btn">
+                        LOGIN
+                    </button>
+
+                    <div className="auth-footer">
+                        <span>Don't have an account?</span>
+                        <NavLink to='/register' className="auth-link">Sign Up &raquo;</NavLink>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 };

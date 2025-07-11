@@ -99,11 +99,11 @@ export default function Home({ userData }) {
             <span className='btn-holder'>
               <div className={`btn ${!status && "selected"}`} onClick={() => {
                 setStatus(false);
-                setVisibleTips(3); // Reset visible tips when changing filter
+                setVisibleTips(3);
               }}>Free</div>
               <div className={`btn ${status && "selected"}`} onClick={() => {
                 setStatus(true);
-                setVisibleTips(3); // Reset visible tips when changing filter
+                setVisibleTips(3);
               }}>Premium VIP</div>
             </span>
           </>
@@ -113,48 +113,48 @@ export default function Home({ userData }) {
             return (
               <React.Fragment key={filteredTip.date}>
                 <h2>{filteredTip.date}</h2>
-                <table className='wrapper'>
-                  <thead>
-                    <tr>
-                      <th>HOME</th>
-                      <th>AWAY</th>
-                      <th>PICK</th>
-                      <th>ODDS</th>
-                      <th>RESULTS</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredTip.items.map(tip => {
-                      return (
-                        <tr key={tip.id || filteredTip.items.indexOf(tip)}>
-                          <td>{tip.home}</td>
-                          <td>{tip.away}</td>
-                          <td>{tip.pick}</td>
-                          <td>{tip.odd}</td>
-                          <td>
-                            {tip.won === 'won' ?
-                              <span className='won'>
-                                <p>Won</p>
+                <div className="card-container">
+                  {filteredTip.items.map(tip => (
+                    <div className="glass-card" key={tip.id || filteredTip.items.indexOf(tip)}>
+                      <div className="card-header">
+                        <span className="teams">{tip.home} vs {tip.away}</span>
+                      </div>
+                      <div className="card-body">
+                        <div className="card-row">
+                          <span>Pick:</span>
+                          <span className="pick">{tip.pick}</span>
+                        </div>
+                        <div className="card-row">
+                          <span>Odds:</span>
+                          <span>{tip.odd}</span>
+                        </div>
+                        <div className="card-row result">
+                          <span>Result:</span>
+                          <span className={tip.won === 'won' ? 'won' : 'lost'}>
+                            {tip.won === 'won' ? (
+                              <>
+                                <span>Won</span>
                                 <Verified className='icon' />
-                              </span> :
-                              <span className='lost'>
-                                <p>Lost</p>
+                              </>
+                            ) : (
+                              <>
+                                <span>Lost</span>
                                 <Error className='icon' />
-                              </span>
-                            }
-                          </td>
-                        </tr>
-                      )
-                    })}
-                  </tbody>
-                </table>
+                              </>
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </React.Fragment>
             )
           })
         }
         {hasMoreTips && (
           <div style={{ textAlign: 'center', margin: '20px 0' }}>
-            <button className='btn' onClick={loadMoreTips}>
+            <button className='btn load-more' onClick={loadMoreTips}>
               Load More
             </button>
           </div>
@@ -166,13 +166,7 @@ export default function Home({ userData }) {
         <h2>What clients say:</h2>
         <Testimonials />
       </section>
-      <section>
-        <div className="jobs-flyer" style={{ width: '100%', padding: '5px' }}>
-          <h1>Join The Winning Team</h1>
-          <h1>Get VIP memmbership for 1 month with as little as KSH 3000.</h1>
-          <NavLink to={"/pay"} className='btn' onClick={() => setPrice(3000)}>Subscribe Now</NavLink>
-        </div>
-      </section>
+      <Flyer />
     </div>
   )
 }

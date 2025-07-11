@@ -57,7 +57,7 @@ export const socialLinks = {
     facebookPage: "https://www.facebook.com/profile.php?id=61569974256919&mibextid=ZbWKwL",
     xPage: "https://www.x.com/@powerking_tips",
     instagramPage: "https://www.instagram.com/powerkingtips/",
-    affliateLink: "https://spin-to-win.powerking-tips.com/",
+    affliateLink: "https://spin-to-win.win11.com/",
     promotion: "https://refpa7921972.top/L?tag=d_3966788m_1573c_&site=3966788&ad=1573"
 }
 

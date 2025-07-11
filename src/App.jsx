@@ -2,8 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { useEffect, useState, useContext } from 'react';
 import { AuthContext } from './AuthContext'
-import { db, getUser, updateUser } from "./firebase";
-import { getAuth } from "firebase/auth";
+import { db, updateUser } from "./firebase";
 
 import Navbar from './components/Navbar/Navbar';
 import Loader from './components/Loader/Loader';
@@ -15,13 +14,12 @@ import AdminTips from "./pages/AdminTips";
 import { Login } from "./pages/Login";
 import Register from "./pages/Register";
 import Error from './pages/Error';
-import Payments from "./pages/Payments/Payments";
 import EditTip from "./pages/EditTip";
 import UserProfile from "./pages/userProfile/UserProfile";
 import ListUsers from "./pages/ListUsers";
 import EditUser from "./pages/EditUser";
 import { doc, getDoc } from "firebase/firestore";
-import Topbar from "./components/Topbar/Topbar";
+import PaymentPage from "./pages/Payments/PaymentPage";
 
 
 function App() {
@@ -133,11 +131,10 @@ function App() {
         }
         {
           !loading && <>
-            <Topbar />
             <Navbar />
             <Routes>
               <Route path='/' element={<Home userData={userData} />} />
-              <Route path='pay' element={currentUser ? <Payments setUserData={setUserData} /> : <Login />} />
+              <Route path='pay' element={currentUser ? <PaymentPage setUserData={setUserData} /> : <Login />} />
               <Route path='admin/tips' element={currentUser ? <AdminTips /> : <Login />} />
               <Route path='edit' element={currentUser ? <EditTip /> : <Login />} />
               <Route path='users' element={currentUser ? <ListUsers /> : <Login />} />

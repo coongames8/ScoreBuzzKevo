@@ -1,8 +1,8 @@
 {
-  "name": "Powerking-tips",
+  "name": "win11",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://powerking-tips.onrender.com/",
+  "homepage": "https://win11.onrender.com/",
   "proxy": "*",
   "type": "module",
   "scripts": {

@@ -1,6 +1,5 @@
 import Logo from '../../assets/logo.png';
 import './Navbar.scss';
-
 import { NavLink } from "react-router-dom";
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../AuthContext';
@@ -20,19 +19,22 @@ const Navbar1 = () => {
     }
 
     return (
-        <header>
-            <NavLink to="/" className='logo'>
-                <img src={Logo} alt='kdan_logo' />
-            </NavLink>
-            <nav>
-                <NavLink to="/" title='predictions' >Home</NavLink>
-                <NavLink to="/about" title='about-us' >About</NavLink>
-                <div className="btn-wrapper">
-                    {currentUser ? <NavLink className="btn" onClick={handleLogout} title='signout'>Logout</NavLink> :
-                        <NavLink className="btn" to="/login" title='signout'>Log In</NavLink>}
-                </div>
-            </nav>
-
+        <header className="glass-navbar">
+            <div className="navbar-container">
+                <NavLink to="/" className='logo'>
+                    <img src={Logo} alt='kdan_logo' />
+                </NavLink>
+                <nav>
+                    <NavLink to="/" title='predictions'>Home</NavLink>
+                    <NavLink to="/about" title='about-us'>About</NavLink>
+                    <div className="btn-wrapper">
+                        {currentUser ?
+                            <NavLink className="glass-btn" onClick={handleLogout} title='signout'>Logout</NavLink> :
+                            <NavLink className="glass-btn" to="/login" title='signout'>Log In</NavLink>
+                        }
+                    </div>
+                </nav>
+            </div>
         </header>
     );
 }

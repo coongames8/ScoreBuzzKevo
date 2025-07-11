@@ -1,55 +1,61 @@
 import { useContext, useEffect, useState } from 'react'
 import './Flyer.scss'
-import { NavLink } from 'react-router-dom';
-import { PriceContext } from '../../PriceContext';
-import { getWonTips } from '../../firebase';
-import { ErrorTwoTone, TimelapseOutlined, Verified } from '@mui/icons-material';
+import { NavLink } from 'react-router-dom'
+import { PriceContext } from '../../PriceContext'
+import { getWonTips } from '../../firebase'
+import { TimelapseOutlined, Verified, ErrorTwoTone } from '@mui/icons-material'
 
 export default function Flyer() {
-  const { setPrice } = useContext(PriceContext);
-  const [tips, setTips] = useState(null);
-  const [isOnline] = useState(() => {
-    return navigator.onLine
-  })
+  const { setPrice } = useContext(PriceContext)
+  const [tips, setTips] = useState(null)
+  const [isOnline] = useState(() => navigator.onLine)
 
   useEffect(() => {
-    getWonTips(12, setTips);
-  }, [isOnline]);
+    getWonTips(12, setTips)
+  }, [isOnline])
 
-
-  function truncateLeague(input, value) {
-    if (input.length > value) {
-      return input.substring(0, value) + '...';
-    }
-    return input;
-  };
+  const truncateText = (text, length) => {
+    return text.length > length ? `${text.substring(0, length)}...` : text
+  }
 
   return (
-    <div className='flyer'>
-      <h1 className='title'>Expert Football Tips!</h1>
-      <h2 className='title'>Join Us and Win high today!</h2>
-      <NavLink to={'pay'} className='btn' onClick={() => setPrice(3000)}>GET STARTED</NavLink>
-      <div className="scroll">
-        <div className="scroll-track">
-          {
-            tips && tips.filter((tip) => (tip.won === 'won')).map((tip) => {
-              return (
-                <div className="post-card" key={tip.id} style={{ borderLeft: tip.premium ? "5px solid #FFBD59" : "5px solid green" }}>
-                  <div className="center">
-                    <div className="teams">
-                      <p className="name">{truncateLeague(tip.home, 10)}</p>
-                      <div className="results">{tip.results}</div>
-                      <p className="name">{truncateLeague(tip.away, 15)}</p>
-                    </div>
-                    <div className='info'>
-                      <p><TimelapseOutlined className='icon' />{tip.date}</p>
-                      <p>{tip.won ? <>{tip.odd} <Verified className='icon won' /></> : <>{tip.odd} <ErrorTwoTone className='icon lost' /></>}</p>
-                    </div>
-                  </div>
-                </div>
-              )
-            })
-          }
+    <div className="flyer-glass">
+      <div className="flyer-content">
+        <h2 className="flyer-title">Expert Football Tips</h2>
+        <p className="flyer-subtitle">Join our winning team today</p>
+        <NavLink
+          to="/pay"
+          className="glass-btn primary"
+          onClick={() => setPrice(3000)}
+        >
+          GET VIP ACCESS
+        </NavLink>
+      </div>
+
+      <div className="winning-tips">
+        <div className="scroller">
+          {tips && tips.filter(tip => tip.won === 'won').map((tip) => (
+            <div
+              className={`tip-card ${tip.premium ? 'premium' : ''}`}
+              key={tip.id}
+            >
+              <div className="teams">
+                <span className="team">{truncateText(tip.home, 12)}</span>
+                <span className="score">{tip.results}</span>
+                <span className="team">{truncateText(tip.away, 12)}</span>
+              </div>
+              <div className="match-info">
+                <span className="date">
+                  <TimelapseOutlined className="icon" />
+                  {tip.date}
+                </span>
+                <span className="odds">
+                  {tip.odd}
+                  <Verified className="icon won" />
+                </span>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

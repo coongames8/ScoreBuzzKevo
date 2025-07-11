@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import './Pricing.scss'
 import { PriceContext } from '../../PriceContext';
 import { useNavigate } from 'react-router-dom';
+import { Star } from '@mui/icons-material';
 
 export default function Pricing() {
     const navigate = useNavigate();
@@ -15,7 +16,7 @@ export default function Pricing() {
         {
             id: 1,
             title: "Silver",
-            price: 250,
+            price: 200,
             duration: "/Day",
             features: [
                 "Every day is game day! Check out our daily tips and win big!",
@@ -26,11 +27,10 @@ export default function Pricing() {
         {
             id: 2,
             title: "Gold",
-            //slogan: "30% cashback on your first purchase",
-            price: 800,
+            price: 700,
             duration: "/Week",
             features: [
-                "Get the scoop on this week’s matches",
+                "Get the scoop on this week's matches",
                 "Enjoy a full week of VIP predictions",
                 "Weekly unbeatable football predictions!"
             ]
@@ -38,40 +38,63 @@ export default function Pricing() {
         {
             id: 3,
             title: "Platinum",
-            //slogan: "50% cashback on your first purchase",
-            price: 3000,
+            price: 2000,
             duration: "/Month",
             features: [
-                "Plan ahead with our monthly predictions.",
+                "Plan ahead with our monthly predictions",
                 "Get unlimited VIP access for a month",
                 "Your winning streak starts here!"
             ]
         }
     ]
+
     const Item = ({ data }) => {
         return (
-            <div className="item" key={data.duration}>
-                <h1>{data.title} {data.slogan && <><br /><div className='slogan'>{data.slogan}</div></>} </h1>
+            <div className={`pricing-card ${data.title === 'Gold' ? 'featured' : ''}`} key={data.duration}>
+                {data.title === 'Gold' && (
+                    <div className="featured-badge">
+                        <Star className="star-icon" />
+                        <span>Popular</span>
+                    </div>
+                )}
 
-                <p><span>KSH</span><span>{data.price}</span><span>{data.duration}</span></p>
-                <ul>
-                    {
-                        data.features.map(item => {
-                            return <li key={item}>{item}</li>
-                        })
-                    }
-                </ul>
-                <button className="btn" onClick={() => handleClick(data.price)}>Get Started Now</button>
+                <div className="card-header">
+                    <h3>{data.title}</h3>
+                    <div className="price">
+                        <span className="currency">KSH</span>
+                        <span className="amount">{data.price}</span>
+                        <span className="duration">{data.duration}</span>
+                    </div>
+                </div>
+
+                <div className="card-features">
+                    <ul>
+                        {data.features.map((item, index) => (
+                            <li key={index}>
+                                <span className="checkmark">✓</span>
+                                <span>{item}</span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
+                <button
+                    className="glass-btn"
+                    onClick={() => handleClick(data.price)}
+                >
+                    Get Started Now
+                </button>
             </div>
         )
     }
+
     return (
-        <div className="pricing" id='pricing'>
-            {
-                plans.map(item => {
-                    return <Item data={item} key={item.id} />
-                })
-            }
+        <div className="pricing-container" id='pricing'>
+            <div className="pricing-grid">
+                {plans.map(item => (
+                    <Item data={item} key={item.id} />
+                ))}
+            </div>
         </div>
     )
 }
