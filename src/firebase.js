@@ -3,13 +3,14 @@ import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } f
 import { addDoc, collection, doc, getDoc, getDocs, getFirestore, limit, query, updateDoc, where, orderBy, setDoc } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAG3wa_geMw6Is-lUKdKDeIXFGExRykhQA",
-  authDomain: "ScoreBuzz-86562.firebaseapp.com",
-  projectId: "ScoreBuzz-86562",
-  storageBucket: "ScoreBuzz-86562.firebasestorage.app",
-  messagingSenderId: "132820841590",
-  appId: "1:132820841590:web:e9cbb5017f77ef7fb8db57",
-  measurementId: "G-SXJBDD3322"
+  apiKey: "AIzaSyANFhP14_BJOaImr50PiFoychlbR88JeXU",
+  authDomain: "powerking-betting-tips.firebaseapp.com",
+  databaseURL: "https://powerking-betting-tips-default-rtdb.firebaseio.com",
+  projectId: "powerking-betting-tips",
+  storageBucket: "powerking-betting-tips.appspot.com",
+  messagingSenderId: "617291483997",
+  appId: "1:617291483997:web:e3114cc5c5fa03d9d7b6b4",
+  measurementId: "G-57VGM61EY8"
 };
 
 const app = initializeApp(firebaseConfig);
