@@ -52,12 +52,12 @@ export const faqs = [
 ]
 
 export const socialLinks = {
-    telegramChannel: "https://t.me/powerkingtips",
-    whatsappChannel: "https://whatsapp.com/channel/0029Vb3Louu9xVJktevbuZ2K",
-    facebookPage: "https://www.facebook.com/profile.php?id=61569974256919&mibextid=ZbWKwL",
-    xPage: "https://www.x.com/@powerking_tips",
-    instagramPage: "https://www.instagram.com/powerkingtips/",
-    affliateLink: "https://spin-to-win.win11.com/",
+    telegramChannel: "http://t.me/rodykee",
+    whatsappChannel: "https://whatsapp.com/channel/0029VbAp7JVLI8YOV9iVQ411",
+    facebookPage: "https://www.facebook.com/profile.php?id=61578568892193",
+    xPage: "https://www.x.com/@scorebuzz1",
+    instagramPage: "https://www.instagram.com/score.buzz1",
+    affliateLink: "https://spin-to-win.ScoreBuzz.com/",
     promotion: "https://refpa7921972.top/L?tag=d_3966788m_1573c_&site=3966788&ad=1573"
 }
 

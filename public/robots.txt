@@ -3,7 +3,7 @@ User-agent: *
 Disallow:
 
 # Specify the sitemap location
-Sitemap: https://win11.onrender.com/sitemap.xml
+Sitemap: https://scorebuzz.onrender.com/sitemap.xml
 
 # (Optional) Restrict access to certain areas
 Disallow: /admin/

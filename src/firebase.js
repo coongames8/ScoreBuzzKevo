@@ -4,9 +4,9 @@ import { addDoc, collection, doc, getDoc, getDocs, getFirestore, limit, query, u
 
 const firebaseConfig = {
   apiKey: "AIzaSyAG3wa_geMw6Is-lUKdKDeIXFGExRykhQA",
-  authDomain: "win11-86562.firebaseapp.com",
-  projectId: "win11-86562",
-  storageBucket: "win11-86562.firebasestorage.app",
+  authDomain: "ScoreBuzz-86562.firebaseapp.com",
+  projectId: "ScoreBuzz-86562",
+  storageBucket: "ScoreBuzz-86562.firebasestorage.app",
   messagingSenderId: "132820841590",
   appId: "1:132820841590:web:e9cbb5017f77ef7fb8db57",
   measurementId: "G-SXJBDD3322"

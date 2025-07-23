@@ -61,7 +61,7 @@ const Footer = ({ user }) => {
                 <div className="footer-divider"></div>
 
                 <div className="footer-links">
-                    <p className="copyright">&copy; Win11 {new Date().getFullYear()}</p>
+                    <p className="copyright">&copy; ScoreBuzz {new Date().getFullYear()}</p>
                     <NavLink to="/about#faq" className="footer-link">FAQ</NavLink>
                     {isAdmin && <NavLink to="/admin/tips" className="footer-link">ADD TIP</NavLink>}
                 </div>
