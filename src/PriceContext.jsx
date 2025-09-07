@@ -3,7 +3,7 @@ import { createContext, useState } from "react";
 export const PriceContext = createContext();
 
 export const PriceContextProvider = ({ children }) => {
-  const [price, setPrice] = useState(800);
+  const [price, setPrice] = useState(700);
 
 
   return (
