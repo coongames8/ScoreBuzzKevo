@@ -26,7 +26,7 @@ const Navbar1 = () => {
                 </NavLink>
                 <nav>
                     <NavLink to="/" title='predictions'>Home</NavLink>
-                    <NavLink to="/about" title='about-us'>About</NavLink>
+                    <NavLink to="/pay" title='pricing'>Pricing</NavLink>
                     <div className="btn-wrapper">
                         {currentUser ?
                             <NavLink className="glass-btn" onClick={handleLogout} title='signout'>Logout</NavLink> :

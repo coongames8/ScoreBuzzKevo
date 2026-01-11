@@ -21,7 +21,7 @@ export default function Flyer() {
   return (
     <div className="flyer-glass">
       <div className="flyer-content">
-        <h2 className="flyer-title">Expert Football Tips</h2>
+        <h2 className="flyer-title">Expert Football Analysis</h2>
         <p className="flyer-subtitle">Join our winning team today</p>
         <NavLink
           to="/pay"

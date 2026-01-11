@@ -3,7 +3,7 @@
   "name": "ScoreBuzz",
   "homepage": "https://scorebuzz.onrender.com",
   "version": "0.1.0",
-  "description": "Get all the latest ✓Football Predictions, ✓Latest Football Betting Odds and livescores, results & fixtures for all leagues and competitions, including the Premier League, Championship and across the world.",
+  "description": "Your comprehensive source for the latest football scores, match results, team standings, and fixtures from leagues and competitions worldwide, including the Premier League and Championship.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -74,9 +74,9 @@
   ],
   "shortcuts": [
     {
-      "name": "Get VIP Tips",
-      "short_name": "VIP Tips",
-      "description": "Access the latest fixed VIP tips and predictions.",
+      "name": "Match Highlights",
+      "short_name": "Highlights",
+      "description": "Access the latest match highlights and key statistics.",
       "url": "/",
       "icons": [
         {
@@ -87,9 +87,9 @@
       ]
     },
     {
-      "name": "Today's Predictions",
-      "short_name": "Today's Tips",
-      "description": "Check for toda's VIP Tips.",
+      "name": "Today's Fixtures",
+      "short_name": "Today's Games",
+      "description": "Check today's scheduled matches and competitions.",
       "url": "/",
       "icons": [
         {
@@ -115,27 +115,28 @@
   },
   "license": "ISC/MIT",
   "keywords": [
-    "Football Predictions",
-    "Betting Odds",
     "Live Scores",
-    "Betika",
-    "Sportpesa",
-    "365Bet",
-    "Live Sports",
-    "Football Results",
-    "Football Fixtures",
-    "Football Today",
-    "Online Betting",
-    "Sports",
-    "Odibets",
+    "Football",
+    "Soccer",
+    "Match Results",
+    "Sports Fixtures",
+    "Team Standings",
     "Premier League",
     "Championship",
-    "Super Sports",
     "Laliga",
     "Bundesliga",
     "Serie A",
-    "Live Bet",
-    "Casino"
+
+    "Football Analysis",
+		"Match Insights",
+		"Sports Data",
+		"Football Results",
+		"Football Fixtures",
+		"Football Today",
+		"Sports",
+		"Super Sports",
+		"Live Sports Updates",
+		"Match Highlights"
   ],
   "dir": "ltr",
   "lang": "en",
@@ -148,24 +149,7 @@
   "categories": [
     "Utilities",
     "Sports",
-    "Betting",
-    "Productivity",
-    "Social",
-    "News",
-    "Tools",
-    "Gambling"
-  ],
-  "related_applications": [
-    {
-      "platform": "play",
-      "id": "com.powerking",
-      "url": "https://play.google.com/store/apps/details?id=com.powerking"
-    },
-    {
-      "platform": "amazon",
-      "id": "com.powerking",
-      "url": "https://www.amazon.com/gp/mas/dl/android?p=com.powerking"
-    }
+    "News"
   ],
   "prefer_related_applications": false
 }

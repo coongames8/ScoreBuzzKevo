@@ -9,7 +9,6 @@ import Loader from './components/Loader/Loader';
 import Footer from './components/Footer/Footer';
 
 import Home from './pages/Home';
-import About from './pages/About';
 import AdminTips from "./pages/AdminTips";
 import { Login } from "./pages/Login";
 import Register from "./pages/Register";
@@ -140,7 +139,6 @@ function App() {
               <Route path='users' element={currentUser ? <ListUsers /> : <Login />} />
               <Route path='users/:id' element={currentUser ? <UserProfile data={userData} /> : <Login />} />
               <Route path='users-edit' element={currentUser ? <EditUser userData={userData} setUserData={setUserData} /> : <Login />} />
-              <Route path='about' element={<About />} />
               <Route path='*' element={<Error />} />
               <Route path='login' element={<Login />} />
               <Route path='register' element={<Register />} />
