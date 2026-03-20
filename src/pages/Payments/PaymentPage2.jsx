@@ -21,8 +21,8 @@ const paypalInitialOptions = {
 
 // Pesapal configuration
 const PESAPAL_API_BASE = 'https://all-payments-api-production.up.railway.app/api/pesapal';
-const PESAPAL_CONSUMER_KEY = "nbZBtDnSEt9X+l0cHNDFren+7dTQIJXl";
-const PESAPAL_CONSUMER_SECRET = "3p2NhatNMO64hzQpqGUs062LTvE=";
+const PESAPAL_CONSUMER_KEY = "cULxDBhV1CcQtU5zhj00Q+N7AfhJmTs8";
+const PESAPAL_CONSUMER_SECRET = "fCfvb6RVfK5X1759JgsP/ZYSfDA=";
 
 // Fixed exchange rate (approximate KSH to USD)
 const EXCHANGE_RATE = 150; // 1 USD = 150 KSH
