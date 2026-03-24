@@ -3,7 +3,7 @@ import React, { useState, useContext, useRef, useEffect } from 'react';
 import { Check, CopyAll, ArrowUpward } from '@mui/icons-material';
 import AppHelmet from '../../components/AppHelmet';
 import NowPaymentsApi from '@nowpaymentsio/nowpayments-api-js';
-import { PaystackButton } from 'react-paystack';
+import KoraPayment from 'kora-checkout';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 import './Payments.scss'
@@ -12,7 +12,7 @@ import { PriceContext } from '../../PriceContext';
 
 const npApi = new NowPaymentsApi({ apiKey: 'D7YT1YV-PCAM4ZN-HX9W5M1-H02KFCV' });
 
-export default function PaymentPage({ setUserData }) {
+export default function KoraPayments({ setUserData }) {
     const { price, setPrice } = useContext(PriceContext);
     const { currentUser } = useContext(AuthContext);
     const [paymentType, setPaymentType] = useState("mpesa");
@@ -70,25 +70,36 @@ export default function PaymentPage({ setUserData }) {
                 subDate: new Date().toISOString()
             }, { merge: true });
 
-            alert(`You Have Upgraded To ${getSubscriptionPeriod()} VIP`);
             await getUser(currentUser.email, setUserData);
+            alert(`You Have Upgraded To ${getSubscriptionPeriod()} VIP`);
             window.location.pathname = '/';
         } catch (error) {
             alert(error.message);
         }
     };
 
-    const paystackConfig = {
-        reference: (new Date()).getTime().toString(),
-        email: currentUser.email,
-        amount: price * 100,
-        publicKey: 'pk_live_d2e5187d5e0f9edeb5a8be8c42fe66628906c370',//pk_live_f03c24715e4c74ee3f4ca51ccf2bd834d1059284
+
+    const handlePayment = () => {
+      const paymentOptions = {
+        key: "pk_live_jq6VWUDumbyq2yF8kfkkAtbEzQf4yium2nPc3ekW",
+        reference: `ref-${Date.now()}`,
+        amount: price,
         currency: "KES",
-        metadata: { name: currentUser.email },
-        text: 'Pay Now',
-        onSuccess: handleUpgrade,
-        onClose: () => console.log('Payment closed')
+        customer: {
+            name: currentUser.email,
+            email: currentUser.email,
+        },
+        onSuccess: () => {
+            handleUpgrade();
+        },
+        onFailed: (err) => {
+            console.error(err.message);
+        }
     };
+
+    const payment = new KoraPayment();
+    payment.initialize(paymentOptions);
+};
 
     const getCryptoAddress = async () => {
         const params = {
@@ -201,7 +212,7 @@ export default function PaymentPage({ setUserData }) {
                 ) : (
                     <div className="mpesa-payment">
                         <h3>GET {getSubscriptionPeriod().toUpperCase()} VIP FOR KSH {price}</h3>
-                        <PaystackButton {...paystackConfig} className="paystack-btn" />
+                        <button onClick={handlePayment} className="btn paystack-btn">Pay Now</button>
                     </div>
                 )}
             </div>

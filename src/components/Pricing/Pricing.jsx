@@ -16,7 +16,7 @@ export default function Pricing() {
     {
       id: 1,
       title: "Silver",
-      price: 200,
+      price: 230,
       duration: "/Day",
       features: [
         "Every day is game day! Check out our daily insights and match analyses!",
