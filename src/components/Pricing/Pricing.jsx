@@ -27,7 +27,7 @@ export default function Pricing() {
     {
       id: 2,
       title: "Gold",
-      price: 700,
+      price: 800,
       duration: "/Week",
       features: [
         "Get comprehensive analysis of this week's matches",

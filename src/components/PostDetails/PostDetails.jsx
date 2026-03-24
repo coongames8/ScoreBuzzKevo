@@ -95,7 +95,7 @@ export default function PostDetail({ data, userData }) {
           <Link
             to={'/pay'}
             className='glass-btn premium-btn'
-            onClick={() => setPrice(700)}
+            onClick={() => setPrice(800)}
           >
             GET VIP ACCESS
           </Link>

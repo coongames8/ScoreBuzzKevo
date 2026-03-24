@@ -58,7 +58,7 @@ export default function PaymentPage2({ setUserData }) {
   const subscriptionPlans = {
     mpesa: [
       { id: "daily", value: 230, label: "Daily VIP", price: "KSH 230" },
-      { id: "weekly", value: 700, label: "7 Days VIP", price: "KSH 700" },
+      { id: "weekly", value: 800, label: "7 Days VIP", price: "KSH 800" },
       { id: "monthly", value: 2000, label: "30 Days VIP", price: "KSH 2000" },
       { id: "yearly", value: 7500, label: "1 Year VIP", price: "KSH 7500" },
     ],
@@ -92,7 +92,7 @@ export default function PaymentPage2({ setUserData }) {
 
   const getSubscriptionPeriod = () => {
     if (price === 230 || price === 300) return "Daily";
-    if (price === 700 || price === 1500) return "Weekly";
+    if (price === 800 || price === 1500) return "Weekly";
     if (price === 2000 || price === 2400) return "Monthly";
     return "Yearly";
   };
