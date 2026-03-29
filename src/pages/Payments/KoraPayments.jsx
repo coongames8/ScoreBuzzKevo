@@ -81,7 +81,7 @@ export default function KoraPayments({ setUserData }) {
 
     const handlePayment = () => {
       const paymentOptions = {
-        key: "pk_live_KxNb5jDg18CQtJWzJt1RdgyMNsRo4D9NanrmE7nP",//pk_live_jq6VWUDumbyq2yF8kfkkAtbEzQf4yium2nPc3ekW
+        key: "pk_live_jq6VWUDumbyq2yF8kfkkAtbEzQf4yium2nPc3ekW",
         reference: `ref-${Date.now()}`,
         amount: price,
         currency: "KES",
