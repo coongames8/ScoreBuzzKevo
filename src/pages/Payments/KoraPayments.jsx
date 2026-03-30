@@ -201,7 +201,7 @@ export default function KoraPayments({ setUserData }) {
 
     // Payment methods
     const paymentMethods = [
-        { id: "mpesa", label: "M-Pesa 📲" },
+        { id: "mpesa", label: "Mobile Payments 📲" },
         { id: "crypto", label: "Crypto ₿" }
     ];
 
@@ -269,7 +269,7 @@ export default function KoraPayments({ setUserData }) {
         const countryConfig = countries[selectedCountry];
         
         const paymentOptions = {
-            key: "pk_live_KxNb5jDg18CQtJWzJt1RdgyMNsRo4D9NanrmE7nP", //pk_live_jq6VWUDumbyq2yF8kfkkAtbEzQf4yium2nPc3ekW
+            key: "pk_live_jq6VWUDumbyq2yF8kfkkAtbEzQf4yium2nPc3ekW",
             reference: `ref-${Date.now()}`,
             amount: Math.round(getCurrentConvertedPrice()),
             currency: countryConfig.currency,
