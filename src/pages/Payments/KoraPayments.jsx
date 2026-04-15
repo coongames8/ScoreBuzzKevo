@@ -41,10 +41,10 @@ export default function KoraPayments({ setUserData }) {
     const countries = {
         'Nigeria': { code: 'NG', currency: 'NGN', flag: '🇳🇬', defaultPrice: 2500 },
         'Kenya': { code: 'KE', currency: 'KES', flag: '🇰🇪', defaultPrice: 230 },
-        'Ghana': { code: 'GH', currency: 'GHS', flag: '🇬🇭', defaultPrice: 20 },
+        /*'Ghana': { code: 'GH', currency: 'GHS', flag: '🇬🇭', defaultPrice: 20 },
         'South Africa': { code: 'ZA', currency: 'ZAR', flag: '🇿🇦', defaultPrice: 50 },
         'Uganda': { code: 'UG', currency: 'UGX', flag: '🇺🇬', defaultPrice: 8000 },
-        'Tanzania': { code: 'TZ', currency: 'TZS', flag: '🇹🇿', defaultPrice: 5000 }
+        'Tanzania': { code: 'TZ', currency: 'TZS', flag: '🇹🇿', defaultPrice: 5000 }*/
     };
 
     // Base prices in KES (original pricing)
