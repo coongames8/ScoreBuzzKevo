@@ -205,7 +205,7 @@ export default function Tips({ userData }) {
       {active && (
         <>
           <div className="modal-backdrop" onClick={handleClose} aria-hidden="true" />
-          <PostDetail data={active} userData={userData} />
+          <PostDetail data={active} userData={userData} onClose={handleClose} />
         </>
       )}
     </div>

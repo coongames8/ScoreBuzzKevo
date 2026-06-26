@@ -7,14 +7,18 @@ import { Link } from 'react-router-dom';
 import { PriceContext } from '../../PriceContext';
 import { AuthContext } from '../../AuthContext';
 
-export default function PostDetail({ data, userData }) {
+export default function PostDetail({ data, userData, onClose }) {
   const { setPrice } = useContext(PriceContext);
   const { currentUser } = useContext(AuthContext);
   const [isPremium, setIsPremium] = useState(false);
   const [isAdmin, setIsAdmin] = useState(null);
 
   const handleClick = () => {
-    document.querySelector(".post-detail")?.classList.remove("active");
+    if (typeof onClose === 'function') {
+      onClose();
+    } else {
+      document.querySelector(".post-detail")?.classList.remove("active");
+    }
   }
 
   useEffect(() => {
