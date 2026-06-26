@@ -33,6 +33,10 @@ export default function PostDetail({ data, userData, onClose }) {
     }
   }, [currentUser, userData]);
 
+  useEffect(()) => {
+    handleClick()
+  }, []);
+
   function formatDate() {
     const date = new Date();
     return date.toLocaleDateString('en-US');
