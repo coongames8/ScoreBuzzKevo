@@ -1,86 +1,126 @@
-.card {
+.user-card {
     width: 320px;
     min-height: 200px;
-    background: #fff;
-    border-radius: 5px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    background: var(--glass-bg);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-md);
     position: relative;
     text-decoration: none;
     flex-wrap: wrap;
+    overflow: hidden;
+    transition: transform var(--dur) var(--ease-out),
+        box-shadow var(--dur) var(--ease-out),
+        border-color var(--dur) var(--ease);
+    animation: fadeInUp var(--dur-slow) var(--ease-out) both;
 
-    @media screen and (max-width: 448px){
-      &{
-        width: 100%;
-      }
+    &:hover {
+        transform: translateY(-6px);
+        box-shadow: var(--shadow-lg);
+        border-color: var(--glass-border-strong);
     }
-  
+
+    @media screen and (max-width: 448px) {
+        width: 100%;
+    }
+
     .cover-bg {
-      height: 80px;
-      border-radius: 5px 5px 0 0;
-      background-size: contain;
-      background-position: center;
+        height: 80px;
+        background-size: cover;
+        background-position: center;
+        position: relative;
     }
-  
-    .user-info-wrap {
-      display: flex;
-      padding: 0 5px;
-      margin-top: -35px;
-  
-      .user-photo {
-        height: 50px;
-        width: 50px;
-        border-radius: 50%;
-        border: 2px solid #fff;
-        object-fit: fill;
-        object-position: center;
-        box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-      }
-  
-      .user-info {
-        padding-left: 10px;
-        padding-top: 5px;
-        flex-wrap: wrap;
-        
-  
-        .user-name {
-          font-size: 20px;
-          font-weight: 400;
-          color: var(--lite);
-          word-wrap: break-word; /* Break long words */
-          word-break: break-word; /* Break long words for compatibility */
-        }
-  
-        .user-title {
-          font-size: 16px;
-          font-weight: 200;
-          color: var(--grey);
-          margin-top: 10px;
-          text-overflow: ellipsis;
-          width: 100%;
-          word-wrap: break-word; /* Break long words */
-          word-break: break-word; /* Break long words for compatibility */
-        }
-      }
-    }
-    .user-bio {
-      padding: 10px 5px;
-      gap: 10px;
-      >*{
-        font-size: 16px;
-        color: var(--grey);
-        margin-top: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: start;
-        width: 100%;
-        word-wrap: break-word; /* Break long words */
-        word-break: break-word; /* Break long words for compatibility */
-      }
 
-      .mail{
-        font-size: 18px;
-        margin: 0 10px;
-      }
+    .vip-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        background: linear-gradient(135deg, var(--accent), #ff9900);
+        color: var(--black);
+        font-size: 0.7rem;
+        font-weight: 800;
+        padding: 3px 10px;
+        border-radius: var(--radius-full);
+        letter-spacing: 0.5px;
+        box-shadow: 0 2px 8px rgba(255, 181, 71, 0.4);
+
+        .vip-icon {
+            font-size: 0.85rem;
+        }
     }
-  }
-  
+
+    .user-info-wrap {
+        display: flex;
+        padding: 0 12px;
+        margin-top: -32px;
+
+        .user-photo {
+            height: 56px;
+            width: 56px;
+            border-radius: 50%;
+            border: 3px solid var(--dark);
+            object-fit: cover;
+            object-position: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .user-info {
+            padding-left: 12px;
+            padding-top: 6px;
+            flex-wrap: wrap;
+
+            .user-name {
+                font-size: 1.1rem;
+                font-weight: 600;
+                color: var(--lite);
+                word-wrap: break-word;
+                word-break: break-word;
+            }
+
+            .user-title {
+                font-size: 0.9rem;
+                font-weight: 400;
+                color: rgba(255, 255, 255, 0.65);
+                margin-top: 4px;
+                text-overflow: ellipsis;
+                width: 100%;
+                word-wrap: break-word;
+                word-break: break-word;
+            }
+        }
+    }
+
+    .user-bio {
+        padding: 14px 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        > * {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.75);
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            word-wrap: break-word;
+            word-break: break-word;
+        }
+
+        .subscription {
+            color: var(--neon-blue);
+            font-weight: 600;
+        }
+
+        .mail {
+            font-size: 1rem;
+            margin-right: 8px;
+            color: var(--neon-blue);
+        }
+    }
+}

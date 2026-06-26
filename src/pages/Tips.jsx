@@ -93,8 +93,19 @@ export default function Tips({ userData }) {
 
   const handleClick = async (tip) => {
     setActive(tip)
-    document.querySelector(".post-detail").classList.add("active")
+    document.querySelector(".post-detail")?.classList.add("active")
+    document.body.style.overflow = 'hidden';
   };
+
+  const handleClose = () => {
+    setActive(null);
+    document.body.style.overflow = '';
+  };
+
+  useEffect(() => {
+    return () => { document.body.style.overflow = ''; };
+  }, []);
+
   return (
     <div className="tips">
       <AppHelmet title={"ScoreBuzz"} location={'/'} />
@@ -191,7 +202,12 @@ export default function Tips({ userData }) {
         </div>
       </div>
 
-      {active && <PostDetail data={active} userData={userData} />}
+      {active && (
+        <>
+          <div className="modal-backdrop" onClick={handleClose} aria-hidden="true" />
+          <PostDetail data={active} userData={userData} />
+        </>
+      )}
     </div>
   )
 }

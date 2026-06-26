@@ -1,18 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../AuthContext';
 import Loader from '../components/Loader/Loader';
-import { db, getUser, updateTip } from '../firebase';
+import { db, getUser } from '../firebase';
 import AppHelmet from '../components/AppHelmet';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { doc, updateDoc } from 'firebase/firestore';
+import { ArrowBack, Person } from '@mui/icons-material';
 
 export default function EditUser({ setUserData }) {
   const location = useLocation();
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const { currentUser } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
 
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -20,7 +21,6 @@ export default function EditUser({ setUserData }) {
   const [subDate, setSubDate] = useState('');
   const [isPremium, setIsPremium] = useState(false);
   const [isAdmin, setIsAdmin] = useState(null);
-
 
   useEffect(() => {
     if (currentUser !== null) {
@@ -34,15 +34,11 @@ export default function EditUser({ setUserData }) {
 
   function toDateTimeLocal(dateString) {
     const date = new Date(dateString);
-
-    // Extract components
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
     const hours = String(date.getHours()).padStart(2, '0');
     const minutes = String(date.getMinutes()).padStart(2, '0');
-
-    // Format as YYYY-MM-DDTHH:mm
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   }
 
@@ -55,7 +51,6 @@ export default function EditUser({ setUserData }) {
       user.subDate && setSubDate(toDateTimeLocal(user.subDate))
     }
   }, [user]);
-
 
   useEffect(() => {
     setUser(location.state)
@@ -70,74 +65,116 @@ export default function EditUser({ setUserData }) {
         isPremium,
         subscription: subscription === "Free" ? "" : subscription,
         subDate
-      }).then(response => {
+      }).then(() => {
         getUser(user.email, setUserData)
+        navigate(-1);
       }).catch(error => {
-        alert(error.message)
+        setError(error.message)
       })
     } else {
       const usercollref = doc(db, 'users', user.email)
       updateDoc(usercollref, {
         username
-      }).then(response => {
-        alert("user updated")
+      }).then(() => {
+        navigate(-1);
       }).catch(error => {
-        alert(error.message)
+        setError(error.message)
       })
     }
   }
 
   useEffect(() => {
-    error && setTimeout(() => {
-      setError(null);
-    }, 2000);
+    if (error) {
+      const t = setTimeout(() => setError(null), 3000);
+      return () => clearTimeout(t);
+    }
   }, [error]);
 
   useEffect(() => {
-    !currentUser && window.history.back();
-  }, [currentUser]);
-
+    if (!currentUser) navigate('/');
+  }, [currentUser, navigate]);
 
   return (
-    <div className='admin-tips'>
-      <AppHelmet title={"Add Tip"} location={'/admin/tips'} />
-      <h1>Update User</h1>
-      {loading && <Loader />}
-      {!loading && <form onSubmit={handleSubmit}>
-        <div className="input-container">
-          <label htmlFor="username">Username: </label>
-          <input type="text" placeholder='@someone' id='username' value={username} onChange={(e) => setUsername(e.target.value)} />
-        </div>
-        <div className="input-container">
-          <label htmlFor="email">Email:</label>
-          <input type="text" placeholder='example@gmail.com' id='email' value={email} onChange={(e) => setEmail(e.target.value)} readOnly />
-        </div>
-        <div className="input-container">
-          <label htmlFor="subscription">Subscription:</label>
-          <input type="text" placeholder='subscription' id='subscription' value={subscription} onChange={(e) => setSubscription(e.target.value)} readOnly={!isAdmin} />
-        </div>
-        {<div className="input-container">
-          <label htmlFor="subDate">Subscribed On: </label>
-          <input type="datetime-local" id='subDate' value={subDate} onChange={(e) => setSubDate(e.target.value)} readOnly={!isAdmin} />
-        </div>}
-        <div className="input-container">
-          <label htmlFor="premium">Is premium</label>
-          <input type="checkbox" placeholder='premium' id='premium' onChange={(e) => setIsPremium(e.target.checked)} checked={isPremium} readOnly={!isAdmin} />
-        </div>
+    <div className='admin-glass'>
+      <AppHelmet title={"Edit User"} location={'/users-edit'} />
+      <div className="admin-header">
+        <h1>Update User</h1>
+        <p>Edit user details below</p>
+      </div>
 
-        <span style={{
-          width: "100%",
-          display: "flex",
-          alignItems: "items",
-          justifyContent: "space-evenly"
-        }}>
-          <button type="submit" className='btn' title='Submit' aria-label="add">Update</button>
-          <span className="btn" onClick={() => window.history.back()}>DONE</span>
-        </span>
-      </form>}
-      {
-        loading && <Loader />
-      }
+      {!loading && user ? (
+        <form onSubmit={handleSubmit} className="admin-form">
+          {error && <div className="form-error">{error}</div>}
+
+          <div className="form-grid">
+            <div className="form-group">
+              <label>Username</label>
+              <input
+                type="text"
+                placeholder='@someone'
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Email</label>
+              <input
+                type="text"
+                placeholder='example@gmail.com'
+                value={email}
+                readOnly
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Subscription</label>
+              <input
+                type="text"
+                placeholder='subscription'
+                value={subscription}
+                onChange={(e) => setSubscription(e.target.value)}
+                readOnly={!isAdmin}
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Subscribed On</label>
+              <input
+                type="datetime-local"
+                value={subDate}
+                onChange={(e) => setSubDate(e.target.value)}
+                readOnly={!isAdmin}
+              />
+            </div>
+
+            <div className="form-group checkbox-group">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={isPremium}
+                  onChange={(e) => setIsPremium(e.target.checked)}
+                  readOnly={!isAdmin}
+                />
+                Premium Member
+              </label>
+            </div>
+          </div>
+
+          <div className="form-actions">
+            <button type="submit" className="submit-btn">
+              <Person className="btn-icon" />
+              Update User
+            </button>
+            <button type="button" className="cancel-btn" onClick={() => navigate(-1)}>
+              <ArrowBack className="btn-icon" />
+              Cancel
+            </button>
+          </div>
+        </form>
+      ) : (
+        <Loader />
+      )}
     </div>
   )
 }

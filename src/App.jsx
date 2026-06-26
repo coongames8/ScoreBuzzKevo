@@ -17,9 +17,8 @@ import EditTip from "./pages/EditTip";
 import UserProfile from "./pages/userProfile/UserProfile";
 import ListUsers from "./pages/ListUsers";
 import EditUser from "./pages/EditUser";
-import { doc, getDoc } from "firebase/firestore";
 import KoraPaymentsV1 from "./pages/Payments/KoraPaymentsV1";
-
+import { doc, getDoc } from "firebase/firestore";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -35,15 +34,6 @@ function App() {
       }
     }
   }, [loading]);
-
-  /*useEffect(() => {
-    const auth = getAuth();
-    const email = auth.currentUser?.email;
-    if (email) {
-      getUser(email, setUserData);
-    }
-    //currentUser && getUser(currentUser.email, setUserData)
-  }, [currentUser])*/
 
   useEffect(() => {
     const fetchUserDataWithRetry = async () => {
@@ -61,7 +51,7 @@ function App() {
         }
 
         retries++;
-        await new Promise((res) => setTimeout(res, 500)); // wait 500ms before retry
+        await new Promise((res) => setTimeout(res, 500));
       }
 
       if (retries === 5) {
@@ -74,16 +64,13 @@ function App() {
     }
   }, [currentUser]);
 
-
   useEffect(() => {
     if (userData && userData.isPremium) {
-      const currentTime = new Date(); // Current time
-      const previousTime = new Date(userData.subDate); // Assuming userData.subDate is the subscription start date
-      const { subscription } = userData; // Get subscription type
-
+      const currentTime = new Date();
+      const previousTime = new Date(userData.subDate);
+      const { subscription } = userData;
       const timeDifference = currentTime - previousTime;
 
-      // Helper function to update user if time limit has passed
       const checkTimeAndUpdate = (timeLimitInMs) => {
         if (timeDifference >= timeLimitInMs) {
           updateUser(currentUser.email, false, null, null);
@@ -92,64 +79,53 @@ function App() {
 
       switch (subscription) {
         case "Daily":
-          checkTimeAndUpdate(24 * 60 * 60 * 1000); // 24 hours in milliseconds
+          checkTimeAndUpdate(24 * 60 * 60 * 1000);
           break;
-
         case "Weekly":
-          checkTimeAndUpdate(7 * 24 * 60 * 60 * 1000); // 7 days in milliseconds
+          checkTimeAndUpdate(7 * 24 * 60 * 60 * 1000);
           break;
-
         case "Monthly":
-          // Check if a month has passed
           if (currentTime.getFullYear() > previousTime.getFullYear() ||
             (currentTime.getFullYear() === previousTime.getFullYear() && currentTime.getMonth() > previousTime.getMonth())) {
             updateUser(currentUser.email, false, null, null);
           }
           break;
-
         case "Yearly":
-          // Check if a year has passed
           if (currentTime.getFullYear() > previousTime.getFullYear() ||
             (currentTime.getFullYear() === previousTime.getFullYear() && currentTime.getMonth() > previousTime.getMonth()) ||
             (currentTime.getFullYear() === previousTime.getFullYear() && currentTime.getMonth() === previousTime.getMonth() && currentTime.getDate() > previousTime.getDate())) {
             updateUser(currentUser.email, false, null, null);
           }
           break;
-
         default:
           return;
       }
     }
-  }, [userData]);
+  }, [userData, currentUser]);
 
   return (
     <HelmetProvider>
       <div className="App">
-        {
-          loading && <Loader />
-        }
-        {
-          !loading && <>
-            <Navbar />
-            <Routes>
-              <Route path='/' element={<Home userData={userData} />} />
-              <Route path='pay' element={currentUser ? <KoraPaymentsV1 setUserData={setUserData} /> : <Login />} />
-              <Route path='admin/tips' element={currentUser ? <AdminTips /> : <Login />} />
-              <Route path='edit' element={currentUser ? <EditTip /> : <Login />} />
-              <Route path='users' element={currentUser ? <ListUsers /> : <Login />} />
-              <Route path='users/:id' element={currentUser ? <UserProfile data={userData} /> : <Login />} />
-              <Route path='users-edit' element={currentUser ? <EditUser userData={userData} setUserData={setUserData} /> : <Login />} />
-              <Route path='*' element={<Error />} />
-              <Route path='login' element={<Login />} />
-              <Route path='register' element={<Register />} />
-
-            </Routes>
-            <Footer user={currentUser} />
-          </>
-        }
+        {loading && <Loader />}
+        {!loading && <>
+          <Navbar />
+          <Routes>
+            <Route path='/' element={<Home userData={userData} />} />
+            <Route path='pay' element={currentUser ? <KoraPaymentsV1 setUserData={setUserData} /> : <Login />} />
+            <Route path='admin/tips' element={currentUser ? <AdminTips /> : <Login />} />
+            <Route path='edit' element={currentUser ? <EditTip /> : <Login />} />
+            <Route path='users' element={currentUser ? <ListUsers /> : <Login />} />
+            <Route path='users/:id' element={currentUser ? <UserProfile data={userData} /> : <Login />} />
+            <Route path='users-edit' element={currentUser ? <EditUser userData={userData} setUserData={setUserData} /> : <Login />} />
+            <Route path='login' element={<Login />} />
+            <Route path='register' element={<Register />} />
+            <Route path='*' element={<Error />} />
+          </Routes>
+          <Footer user={currentUser} />
+        </>}
       </div>
-
     </HelmetProvider>
   );
 }
+
 export default App;

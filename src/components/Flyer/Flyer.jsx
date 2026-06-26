@@ -3,7 +3,7 @@ import './Flyer.scss'
 import { NavLink } from 'react-router-dom'
 import { PriceContext } from '../../PriceContext'
 import { getWonTips } from '../../firebase'
-import { TimelapseOutlined, Verified, ErrorTwoTone } from '@mui/icons-material'
+import { TimelapseOutlined, Verified, EmojiEvents } from '@mui/icons-material'
 
 export default function Flyer() {
   const { setPrice } = useContext(PriceContext)
@@ -21,8 +21,12 @@ export default function Flyer() {
   return (
     <div className="flyer-glass">
       <div className="flyer-content">
-        <h2 className="flyer-title">Expert Football Analysis</h2>
-        <p className="flyer-subtitle">Join our winning team today</p>
+        <span className="flyer-badge">
+          <EmojiEvents className="badge-icon" />
+          Proven Results
+        </span>
+        <h2 className="flyer-title">Join Our Winning Team Today</h2>
+        <p className="flyer-subtitle">Premium football insights that deliver real results</p>
         <NavLink
           to="/pay"
           className="glass-btn primary"

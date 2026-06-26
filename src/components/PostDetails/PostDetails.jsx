@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import './PostDetails.scss';
 import Profile from '../../assets/vip.jpg';
 import Logo from '../../assets/logo.png';
-import { Close, ErrorTwoTone, Verified } from '@mui/icons-material';
+import { Close, ErrorTwoTone, Verified, Edit, Lock } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import { PriceContext } from '../../PriceContext';
 import { AuthContext } from '../../AuthContext';
@@ -11,11 +11,10 @@ export default function PostDetail({ data, userData }) {
   const { setPrice } = useContext(PriceContext);
   const { currentUser } = useContext(AuthContext);
   const [isPremium, setIsPremium] = useState(false);
-  var x = window.matchMedia("(min-width: 576px)");
   const [isAdmin, setIsAdmin] = useState(null);
 
   const handleClick = () => {
-    document.querySelector(".post-detail").classList.remove("active");
+    document.querySelector(".post-detail")?.classList.remove("active");
   }
 
   useEffect(() => {
@@ -25,19 +24,23 @@ export default function PostDetail({ data, userData }) {
         setIsPremium(true);
       } else {
         setIsAdmin(false);
-        setIsPremium(userData.isPremium);
+        setIsPremium(userData?.isPremium);
       }
     }
-  }, [currentUser]);
+  }, [currentUser, userData]);
 
   function formatDate() {
     const date = new Date();
     return date.toLocaleDateString('en-US');
   }
 
+  const isLocked = data.premium && !isPremium && data.date === formatDate();
+
   return (
-    <div className={`post-detail glass-panel ${x.matches && "active"}`}>
-      <Close className='close-icon' onClick={handleClick} />
+    <div className={`post-detail glass-panel active`}>
+      <button className="close-icon" onClick={handleClick} aria-label="Close">
+        <Close />
+      </button>
 
       <div className="detail-header">
         <div className="avatar-container">
@@ -60,9 +63,7 @@ export default function PostDetail({ data, userData }) {
       <div className="match-details">
         <div className="team-row">
           <span className="team-name">
-            {(data.premium && !isPremium && data.date === formatDate())
-              ? "Join VIP To View"
-              : data.home}
+            {isLocked ? "Join VIP To View" : data.home}
           </span>
           <span className="team-score">
             {data.results ? data.results.split('-')[0] : "?"}
@@ -73,9 +74,7 @@ export default function PostDetail({ data, userData }) {
 
         <div className="team-row">
           <span className="team-name">
-            {(data.premium && !isPremium && data.date === formatDate())
-              ? "Join VIP To View"
-              : data.away}
+            {isLocked ? "Join VIP To View" : data.away}
           </span>
           <span className="team-score">
             {data.results ? data.results.split('-')[1] : "?"}
@@ -91,12 +90,13 @@ export default function PostDetail({ data, userData }) {
       </div>
 
       <div className="action-buttons">
-        {(data.premium && !isPremium) && (
+        {isLocked && (
           <Link
             to={'/pay'}
             className='glass-btn premium-btn'
             onClick={() => setPrice(800)}
           >
+            <Lock className="btn-icon" />
             GET VIP ACCESS
           </Link>
         )}
@@ -107,6 +107,7 @@ export default function PostDetail({ data, userData }) {
             className='glass-btn edit-btn'
             state={data}
           >
+            <Edit className="btn-icon" />
             EDIT PREDICTION
           </Link>
         )}

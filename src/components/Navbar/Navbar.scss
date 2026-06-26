@@ -1,152 +1,239 @@
 .glass-navbar {
     width: 100%;
-    height: 50px;
+    height: var(--nav-h);
     display: flex;
     align-items: center;
     justify-content: center;
     position: fixed;
     top: 0;
     z-index: 1000;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    background: rgba(10, 14, 20, 0.35);
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    border-bottom: 1px solid transparent;
+    transition: background var(--dur) var(--ease),
+        border-color var(--dur) var(--ease),
+        box-shadow var(--dur) var(--ease);
+
+    &.scrolled {
+        background: rgba(10, 14, 20, 0.82);
+        border-bottom-color: var(--glass-border);
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+    }
 
     .navbar-container {
         width: 100%;
-        max-width: 1200px;
+        max-width: var(--max-w);
         height: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 20px;
+        padding: 0 24px;
+        position: relative;
     }
 
     .logo {
-        height: 50px;
-        width: 50px;
+        height: 44px;
+        width: 44px;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: transform var(--dur) var(--ease-spring);
 
         img {
             width: 100%;
             height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            transition: all 0.3s ease;
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid var(--glass-border);
+            transition: box-shadow var(--dur) var(--ease);
         }
 
         &:hover {
+            transform: scale(1.08) rotate(-3deg);
             img {
-                transform: scale(1.1);
-                box-shadow: 0 0 15px rgba(0, 119, 255, 0.3);
+                box-shadow: 0 0 18px var(--neon-blue-soft);
             }
         }
 
         @media screen and (max-width: 480px) {
-            height: 40px;
-            width: 40px;
+            height: 38px;
+            width: 38px;
+        }
+    }
+
+    .menu-toggle {
+        display: none;
+        background: transparent;
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-sm);
+        color: var(--lite);
+        padding: 8px;
+        cursor: pointer;
+        transition: background var(--dur-fast) var(--ease);
+        z-index: 1001;
+
+        svg {
+            font-size: 1.5rem;
+        }
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        @media screen and (max-width: 768px) {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
     }
 
     nav {
         display: flex;
         align-items: center;
-        gap: 25px;
+        gap: 28px;
 
         > a {
-            //color: white;
+            color: rgba(255, 255, 255, 0.85);
             text-decoration: none;
             font-weight: 500;
-            font-size: 1rem;
-            padding: 8px 15px;
-            border-radius: 20px;
-            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            padding: 8px 16px;
+            border-radius: var(--radius-full);
+            transition: all var(--dur) var(--ease-out);
             position: relative;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: 2px;
+                left: 50%;
+                transform: translateX(-50%) scaleX(0);
+                width: 24px;
+                height: 2px;
+                background: var(--neon-blue);
+                border-radius: 2px;
+                transition: transform var(--dur) var(--ease-spring);
+            }
 
             &:hover {
-                background: rgba(255, 255, 255, 0.15);
-                transform: translateY(-2px);
+                color: var(--lite);
+                background: rgba(255, 255, 255, 0.08);
+                &::after {
+                    transform: translateX(-50%) scaleX(1);
+                }
             }
 
             &.active {
-                background: rgba(255, 255, 255, 0.2);
+                color: var(--neon-blue);
+                background: var(--neon-blue-soft);
                 font-weight: 600;
-
                 &::after {
-                    content: '';
-                    position: absolute;
-                    bottom: -5px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    width: 30px;
-                    height: 2px;
-                    background: var(--neon-blue);
-                    border-radius: 2px;
+                    transform: translateX(-50%) scaleX(1);
                 }
             }
         }
 
         @media screen and (max-width: 768px) {
-            gap: 15px;
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            width: min(80vw, 320px);
+            flex-direction: column;
+            justify-content: center;
+            gap: 20px;
+            background: rgba(10, 14, 20, 0.96);
+            backdrop-filter: blur(20px);
+            border-left: 1px solid var(--glass-border);
+            padding: 24px;
+            transform: translateX(100%);
+            transition: transform var(--dur-slow) var(--ease-out);
+            z-index: 1000;
+
+            &.open {
+                transform: translateX(0);
+            }
 
             > a {
-                padding: 6px 12px;
-                font-size: 0.9rem;
+                width: 100%;
+                text-align: center;
+                padding: 14px;
+                font-size: 1.1rem;
             }
         }
     }
 
     .btn-wrapper {
-        margin-left: 10px;
+        margin-left: 12px;
+
+        @media screen and (max-width: 768px) {
+            margin-left: 0;
+            width: 100%;
+        }
     }
 
     .glass-btn {
-        padding: 8px 20px;
-        border-radius: 20px;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(0, 0, 0, 0.5);
-        //color: white;
-        font-weight: 500;
+        padding: 10px 22px;
+        border-radius: var(--radius-full);
+        background: linear-gradient(135deg, var(--neon-blue), var(--blue-600));
+        border: none;
+        color: var(--black);
+        font-weight: 700;
+        font-size: 0.9rem;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: transform var(--dur) var(--ease-out),
+            box-shadow var(--dur) var(--ease-out),
+            filter var(--dur) var(--ease);
         text-decoration: none;
-        display: inline-block;
-        backdrop-filter: blur(5px);
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        transform: translateY(-8px);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+
+        .btn-icon {
+            font-size: 1.1rem;
+        }
+
         &:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-10px);
-            box-shadow: 0 5px 15px rgba(0, 119, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+            filter: brightness(1.05);
         }
 
         &:active {
             transform: translateY(0);
         }
-    }
 
-    @media screen and (max-width: 480px) {
-        height: 50px;
-
-        nav {
-            gap: 10px;
-
-            > a {
-                padding: 5px 10px;
-                font-size: 0.8rem;
+        &.logout {
+            background: rgba(255, 90, 95, 0.15);
+            color: var(--error);
+            border: 1px solid rgba(255, 90, 95, 0.4);
+            &:hover {
+                background: rgba(255, 90, 95, 0.25);
+                box-shadow: 0 8px 24px rgba(255, 90, 95, 0.25);
             }
         }
 
-        .glass-btn {
-            padding: 6px 12px;
-            font-size: 0.8rem;
+        @media screen and (max-width: 768px) {
+            width: 100%;
+            justify-content: center;
+            padding: 14px;
+            font-size: 1rem;
+        }
+    }
+
+    .nav-overlay {
+        display: none;
+
+        @media screen and (max-width: 768px) {
+            display: block;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            animation: fadeIn var(--dur) var(--ease) both;
         }
     }
 }
