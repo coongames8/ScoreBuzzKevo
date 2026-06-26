@@ -33,7 +33,7 @@ export default function PostDetail({ data, userData, onClose }) {
     }
   }, [currentUser, userData]);
 
-  useEffect(()) => {
+  useEffect(() => {
     handleClick()
   }, []);
 
