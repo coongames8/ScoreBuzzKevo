@@ -2,13 +2,13 @@ import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../AuthContext";
 import { PriceContext } from "../../PriceContext";
 import {
+  SUBSCRIPTION_PLANS,
   getSubscriptionPeriod,
   getPlanName,
   handleUpgrade,
 } from "./paymentUtils";
 import Swal from "sweetalert2";
 import "./Payments.scss";
-import { Lock, Check, ExpandMore, Public } from "@mui/icons-material";
 
 export default function KoraPaymentsV1({ setUserData }) {
   const { price, setPrice } = useContext(PriceContext);
@@ -25,8 +25,8 @@ export default function KoraPaymentsV1({ setUserData }) {
   const [showCountrySelector, setShowCountrySelector] = useState(false);
 
   const countries = {
-    Nigeria: { code: "NG", currency: "NGN", symbol: "₦", flag: "🇳🇬", rate: 10.63 },
-    Kenya: { code: "KE", currency: "KES", symbol: "KSH", flag: "🇰🇪", rate: 1 },
+    Nigeria: { code: "NG", currency: "NGN", flag: "🇳🇬", rate: 10.63 },
+    Kenya: { code: "KE", currency: "KES", flag: "🇰🇪", rate: 1 },
   };
 
   const priceOptions = {
@@ -36,17 +36,20 @@ export default function KoraPaymentsV1({ setUserData }) {
     Yearly: 7500,
   };
 
+  // Subscription plans
   const subscriptionPlans = [
-    { id: "daily", value: 230, label: "Daily VIP", period: "Daily", tagline: "24 hours" },
-    { id: "weekly", value: 800, label: "7 Days VIP", period: "Weekly", tagline: "1 week" },
-    { id: "monthly", value: 2000, label: "30 Days VIP", period: "Monthly", tagline: "Best value", featured: true },
-    { id: "yearly", value: 7500, label: "1 Year VIP", period: "Yearly", tagline: "Max savings" },
+    { id: "daily", value: 230, label: "Daily VIP", period: "Daily" },
+    { id: "weekly", value: 800, label: "7 Days VIP", period: "Weekly" },
+    { id: "monthly", value: 2000, label: "30 Days VIP", period: "Monthly" },
+    { id: "yearly", value: 7500, label: "1 Year VIP", period: "Yearly" },
   ];
 
+  // Convert prices for Nigeria only
   const convertToNaira = () => {
     setIsLoadingRate(true);
     try {
       const rate = countries.Nigeria.rate;
+
       setConvertedPrices({
         daily: Math.round(priceOptions.Daily * rate),
         weekly: Math.round(priceOptions.Weekly * rate),
@@ -67,6 +70,7 @@ export default function KoraPaymentsV1({ setUserData }) {
     }
   };
 
+  // Reset to KES prices
   const resetToKesPrices = () => {
     setConvertedPrices({
       daily: priceOptions.Daily,
@@ -76,6 +80,7 @@ export default function KoraPaymentsV1({ setUserData }) {
     });
   };
 
+  // Update prices when country changes
   useEffect(() => {
     if (selectedCountry === "Nigeria") {
       convertToNaira();
@@ -90,7 +95,10 @@ export default function KoraPaymentsV1({ setUserData }) {
   };
 
   const getCurrencySymbol = () => {
-    return countries[selectedCountry].symbol;
+    if (selectedCountry === "Nigeria") {
+      return "₦";
+    }
+    return "KSH";
   };
 
   useEffect(() => {
@@ -145,7 +153,7 @@ export default function KoraPaymentsV1({ setUserData }) {
 
     Swal.fire({
       title: "Initializing Payment",
-      text: "Redirecting to secure checkout...",
+      text: "Please wait...",
       allowOutsideClick: false,
       showConfirmButton: false,
       didOpen: () => Swal.showLoading(),
@@ -180,7 +188,7 @@ export default function KoraPaymentsV1({ setUserData }) {
         {
           method: "POST",
           headers: {
-            Authorization: `Bearer sk_live_yQSLfFWUknmw4TdEKfaBhdqJhTUAN8DTY1p5nozm`,
+            Authorization: `Bearer sk_live_QSCFYWDHaEL8Yv3V4JA49G7vm2muVRHxAiBhuhgP`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify(paymentData),
@@ -211,107 +219,86 @@ export default function KoraPaymentsV1({ setUserData }) {
   };
 
   return (
-    <div className="payment-page">
-      <div className="payment-hero">
-        <h1>Upgrade to VIP</h1>
-        <p>Unlock premium predictions and exclusive match insights</p>
+    <div className="kora-payment-wrapper">
+      <div className="country-selector">
+        <div
+          className="selected-country"
+          onClick={() => setShowCountrySelector(!showCountrySelector)}
+        >
+          <span className="flag">{countries[selectedCountry].flag}</span>
+          <span className="country-name">{selectedCountry}</span>
+          <span className="dropdown-arrow">
+            {showCountrySelector ? "▲" : "▼"}
+          </span>
+        </div>
+
+        {showCountrySelector && (
+          <div className="country-dropdown">
+            {Object.entries(countries).map(([country, config]) => (
+              <div
+                key={country}
+                className={`country-option ${
+                  selectedCountry === country ? "active" : ""
+                }`}
+                onClick={() => {
+                  setSelectedCountry(country);
+                  setShowCountrySelector(false);
+                }}
+              >
+                <span className="flag">{config.flag}</span>
+                <span className="country-name">{country}</span>
+                <span className="currency">{config.currency}</span>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
-      <div className="kora-payment-wrapper">
-        <div className="country-selector">
-          <button
-            className="selected-country"
-            onClick={() => setShowCountrySelector(!showCountrySelector)}
-            aria-label="Select country"
-          >
-            <Public className="globe-icon" />
-            <span className="flag">{countries[selectedCountry].flag}</span>
-            <span className="country-name">{selectedCountry}</span>
-            <span className="currency-tag">{countries[selectedCountry].currency}</span>
-            <ExpandMore className={`dropdown-arrow ${showCountrySelector ? "open" : ""}`} />
-          </button>
+      <div className="plan-selector">
+        {subscriptionPlans.map((plan) => {
+          const convertedPrice = convertedPrices[plan.id] || plan.value;
+          const currency = getCurrencySymbol();
 
-          {showCountrySelector && (
-            <div className="country-dropdown">
-              {Object.entries(countries).map(([country, config]) => (
-                <button
-                  key={country}
-                  className={`country-option ${
-                    selectedCountry === country ? "active" : ""
-                  }`}
-                  onClick={() => {
-                    setSelectedCountry(country);
-                    setShowCountrySelector(false);
-                  }}
-                >
-                  <span className="flag">{config.flag}</span>
-                  <span className="country-name">{country}</span>
-                  <span className="currency">{config.currency}</span>
-                  {selectedCountry === country && <Check className="check-icon" />}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
+          return (
+            <label
+              key={plan.id}
+              className={`plan-option ${price === plan.value ? "active" : ""}`}
+            >
+              <input
+                type="radio"
+                name="subscription-plan"
+                value={plan.value}
+                checked={price === plan.value}
+                onChange={() => handlePlanSelect(plan.value)}
+              />
+              <span className="plan-label">{plan.label}</span>
+              <span className="plan-price">
+                {isLoadingRate
+                  ? "Loading..."
+                  : `${currency} ${Math.round(convertedPrice)}`}
+              </span>
+            </label>
+          );
+        })}
+      </div>
 
-        <div className="plan-selector">
-          {subscriptionPlans.map((plan) => {
-            const convertedPrice = convertedPrices[plan.id] || plan.value;
-            const currency = getCurrencySymbol();
-
-            return (
-              <label
-                key={plan.id}
-                className={`plan-option ${price === plan.value ? "active" : ""} ${plan.featured ? "featured" : ""}`}
-              >
-                <input
-                  type="radio"
-                  name="subscription-plan"
-                  value={plan.value}
-                  checked={price === plan.value}
-                  onChange={() => handlePlanSelect(plan.value)}
-                />
-                {plan.featured && <span className="plan-badge">Popular</span>}
-                <span className="plan-tagline">{plan.tagline}</span>
-                <span className="plan-label">{plan.label}</span>
-                <span className="plan-price">
-                  {isLoadingRate
-                    ? "Loading..."
-                    : `${currency} ${Math.round(convertedPrice)}`}
-                </span>
-              </label>
-            );
-          })}
-        </div>
-
-        <div className="kora-payment-summary">
-          <div className="summary-row">
-            <span>Plan</span>
-            <span className="summary-value">{getPlanName(price)} VIP</span>
-          </div>
-          <div className="summary-row total">
-            <span>Total</span>
-            <span className="summary-value">
-              {isLoadingRate
-                ? "Loading..."
-                : `${getCurrencySymbol()} ${Math.round(getCurrentConvertedPrice())}`}
-            </span>
-          </div>
-        </div>
+      <div className="kora-payment">
+        <h3>
+          GET {getPlanName(price).toUpperCase()} VIP FOR{" "}
+          {isLoadingRate
+            ? "Loading..."
+            : `${getCurrencySymbol()} ${Math.round(
+                getCurrentConvertedPrice()
+              )}`}
+        </h3>
 
         <button
           onClick={handlePayment}
           className="confirm-payment-btn"
           disabled={processing || isLoadingRate}
         >
-          <Lock className="btn-icon" />
-          {processing ? "PROCESSING..." : "Pay Securely Now"}
+          {processing ? "PROCESSING..." : "Pay Now"}
         </button>
-
-        <p className="secure-note">
-          <Lock className="lock-icon" />
-          Secured by KoraPay · 256-bit encryption
-        </p>
       </div>
     </div>
   );
