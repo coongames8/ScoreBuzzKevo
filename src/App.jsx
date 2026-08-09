@@ -18,6 +18,7 @@ import UserProfile from "./pages/userProfile/UserProfile";
 import ListUsers from "./pages/ListUsers";
 import EditUser from "./pages/EditUser";
 import { doc, getDoc } from "firebase/firestore";
+import KoraPayments from "./pages/Payments/KoraPayments";
 import KoraPaymentsV1 from "./pages/Payments/KoraPaymentsV1";
 import PaystackPaymentsV1 from "./pages/Payments/PaystackPaymentsV1";
 import { useCurrency } from "./CurrencyContext";
@@ -149,7 +150,8 @@ function App() {
             <Navbar />
             <Routes>
               <Route path='/' element={<Home userData={userData} />} />
-              <Route path='pay' element={currentUser ? (currency === "KES"  ? <PaystackPaymentsV1 setUserData={setUserData} /> : <KoraPaymentsV1 setUserData={setUserData} />) : <Login />} />
+              {/*<Route path='pay' element={currentUser ? (currency === "KES"  ? <PaystackPaymentsV1 setUserData={setUserData} /> : <KoraPaymentsV1 setUserData={setUserData} />) : <Login />} />*/}
+              <Route path='pay' element={currentUser ? <KoraPaymentsV1 setUserData={setUserData} /> : <Login />} />
               <Route path='admin/tips' element={currentUser ? <AdminTips /> : <Login />} />
               <Route path='edit' element={currentUser ? <EditTip /> : <Login />} />
               <Route path='users' element={currentUser ? <ListUsers /> : <Login />} />
