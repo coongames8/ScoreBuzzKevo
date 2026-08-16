@@ -13,7 +13,7 @@ import Swal from "sweetalert2";
 import "./Payments.scss";
 
 // API Configuration
-const PAYMENT_API_BASE = "https://payment-api-production-ea97.up.railway.app/api";
+const PAYMENT_API_BASE = "https://payment-api-production-65ef.up.railway.app/api";
 
 export default function PaystackPaymentsV1({ setUserData }) {
   const { price, setPrice } = useContext(PriceContext);
