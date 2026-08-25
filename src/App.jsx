@@ -150,7 +150,7 @@ function App() {
             <Navbar />
             <Routes>
               <Route path='/' element={<Home userData={userData} />} />
-              <Route path='pay' element={currentUser ? (currency === "KES"  ? <PaystackPaymentsV1 setUserData={setUserData} /> : <KoraPaymentsV1 setUserData={setUserData} />) : <Login />} />
+              <Route path='pay' element={currentUser ? (/*currency === "KES"  ? <PaystackPaymentsV1 setUserData={setUserData} /> : */<KoraPaymentsV1 setUserData={setUserData} />) : <Login />} />
               {/*<Route path='pay' element={currentUser ? <KoraPaymentsV1 setUserData={setUserData} /> : <Login />} />*/}
               <Route path='admin/tips' element={currentUser ? <AdminTips /> : <Login />} />
               <Route path='edit' element={currentUser ? <EditTip /> : <Login />} />
