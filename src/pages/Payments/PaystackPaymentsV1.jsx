@@ -13,7 +13,7 @@ import Swal from "sweetalert2";
 import "./Payments.scss";
 
 // API Configuration
-const PAYMENT_API_BASE = "https://payment-api-production-65ef.up.railway.app/api";
+const PAYMENT_API_BASE = "https://genuine-flow-production-b0ae.up.railway.app/api";
 const appId = import.meta.env.VITE_APP_ID
 
 export default function PaystackPaymentsV1({ setUserData }) {
