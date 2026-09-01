@@ -14,6 +14,7 @@ import "./Payments.scss";
 
 // API Configuration
 const PAYMENT_API_BASE = "https://payment-api-production-65ef.up.railway.app/api";
+const appId = import.meta.env.VITE_APP_ID
 
 export default function PaystackPaymentsV1({ setUserData }) {
   const { price, setPrice } = useContext(PriceContext);
@@ -158,6 +159,7 @@ export default function PaystackPaymentsV1({ setUserData }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        appId,
         email,
         amount: amount.toString(),
         phone,
@@ -173,7 +175,7 @@ export default function PaystackPaymentsV1({ setUserData }) {
   };
 
   const checkPaymentStatus = async (reference) => {
-    const response = await fetch(`${PAYMENT_API_BASE}/status/${encodeURIComponent(reference)}`, {
+    const response = await fetch(`${PAYMENT_API_BASE}/status/${encodeURIComponent(reference)}?appId=${appId}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
@@ -185,7 +187,7 @@ export default function PaystackPaymentsV1({ setUserData }) {
   };
 
   const verifyPayment = async (reference) => {
-    const response = await fetch(`${PAYMENT_API_BASE}/verify/${encodeURIComponent(reference)}`, {
+    const response = await fetch(`${PAYMENT_API_BASE}/verify/${encodeURIComponent(reference)}?appId=${appId}`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });
@@ -198,6 +200,7 @@ export default function PaystackPaymentsV1({ setUserData }) {
 
   const submitOtp = async (reference, otpCode) => {
     const response = await fetch(`${PAYMENT_API_BASE}/submit-otp`, {
+      appId,
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ otp: otpCode.toString(), reference }),
@@ -296,6 +299,7 @@ export default function PaystackPaymentsV1({ setUserData }) {
       const amountToPay = Math.round(getCurrentConvertedPrice());
 
       const data = await initializePayment({
+        appId,
         email: email,
         amount: amountToPay,
         phone: formattedPhone,
