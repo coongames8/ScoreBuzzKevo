@@ -3,7 +3,7 @@ import { AuthContext } from "../../AuthContext";
 import { PriceContext } from "../../PriceContext";
 import {
   SUBSCRIPTION_PLANS,
-  getSubscriptionPeriod,
+  getSubscriptionPeriod, 
   getPlanName,
   handleUpgrade,
   formatPhoneNumber,
