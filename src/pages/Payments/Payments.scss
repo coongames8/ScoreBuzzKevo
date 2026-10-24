@@ -7,28 +7,21 @@
   justify-content: center;
   padding: 2rem;
   background: rgba(0, 0, 0, 0.4);
+  .payment-glass {
+    width: 100%;
+    max-width: 800px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    padding: 2rem;
+    color: white;
+  }
 }
 
-  
-.kora-payment-wrapper{
-  padding-top: 70px;
-  padding-bottom: 20px;
-  padding-left: 10px;
-  padding-right: 10px;
-}
 
-.payment-glass {
-  width: 100%;
-  max-width: 800px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-  padding: 2rem;
-  color: white;
-}
 
 .payment-title {
   text-align: center;
@@ -213,13 +206,30 @@
   }
 }
 
-.mpesa-payment {
+.mpesa-payment, .kora-payment {
   margin-top: 2rem;
   text-align: center;
 
   h3 {
     margin-bottom: 1.5rem;
     font-size: 1.3rem;
+  }
+
+  input {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    color: var(--lite);
+    font-size: 1rem;
+    transition: all var(--dur-fast) var(--ease);
+    &:focus {
+      outline: none;
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 0 3px var(--neon-blue-soft);
+      background: rgba(255, 255, 255, 0.12);
+    }
   }
 
   .paystack-btn {

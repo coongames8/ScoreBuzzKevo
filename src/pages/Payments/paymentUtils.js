@@ -67,7 +67,7 @@ export const getPlanName = (price) => {
 };
 
 // Handle user upgrade after successful payment
-export const handleUpgrade = async (currentUser, price, setUserData) => {
+export const handleUpgrade = async (currentUser, transactionData, setUserData) => {
   try {
     const userDocRef = doc(db, "users", currentUser.email);
     await setDoc(
@@ -76,7 +76,7 @@ export const handleUpgrade = async (currentUser, price, setUserData) => {
         email: currentUser.email,
         username: currentUser.email,
         isPremium: true,
-        subscription: getSubscriptionPeriod(price),
+        subscription: getSubscriptionPeriod(transactionData.amount),
         subDate: new Date().toISOString(),
       },
       { merge: true }

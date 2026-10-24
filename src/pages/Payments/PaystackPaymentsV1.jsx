@@ -435,21 +435,43 @@ export default function PaystackPaymentsV1({ setUserData }) {
   };
 
   return (
-    <div className="kora-payment-wrapper">
-      <div className="country-selector">
+    <div className="payment-container">
+      <div className="payment-glass">
+      <div className="country-selector" style={{ marginBottom: '20px' }}>
         <div
           className="selected-country"
           onClick={() => setShowCountrySelector(!showCountrySelector)}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            padding: '10px',
+            background: 'rgba(255,255,255,0.1)',
+            borderRadius: '8px',
+            cursor: 'pointer',
+            justifyContent: 'space-between'
+        }}
         >
-          <span className="flag">{countries[selectedCountry].flag}</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <span className="flag" style={{ fontSize: '24px' }}>{countries[selectedCountry].flag}</span>
           <span className="country-name">{selectedCountry}</span>
           <span className="dropdown-arrow">
             {showCountrySelector ? "▲" : "▼"}
           </span>
+          </div>
         </div>
 
         {showCountrySelector && (
-          <div className="country-dropdown">
+          <div 
+            className="country-dropdown"
+            style={{
+              position: 'absolute',
+              background: 'rgba(0,0,0,0.9)',
+              borderRadius: '8px',
+              marginTop: '5px',
+              zIndex: 1000,
+              width: '100%'
+            }}>
             {Object.entries(countries).map(([country, config]) => (
               <div
                 key={country}
@@ -460,6 +482,15 @@ export default function PaystackPaymentsV1({ setUserData }) {
                   setSelectedCountry(country);
                   setShowCountrySelector(false);
                 }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  padding: '10px',
+                  cursor: 'pointer',
+                  background: selectedCountry === country ? 'rgba(255,255,255,0.2)' : 'transparent',
+                  transition: 'background 0.3s'
+              }}
               >
                 <span className="flag">{config.flag}</span>
                 <span className="country-name">{country}</span>
@@ -568,7 +599,7 @@ export default function PaystackPaymentsV1({ setUserData }) {
 
         <button
           onClick={awaitingOtp ? handleSubmitOtp : handlePayment}
-          className="confirm-payment-btn"
+          className="confirm-payment-btn paystack-btn"
           disabled={processing || isLoadingRate}
         >
           {processing ? (
@@ -579,6 +610,7 @@ export default function PaystackPaymentsV1({ setUserData }) {
             "Pay Now"
           )}
         </button>
+      </div>
       </div>
     </div>
   );

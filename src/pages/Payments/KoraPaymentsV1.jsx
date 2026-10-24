@@ -1,4 +1,5 @@
 import { useContext, useState, useEffect } from "react";
+import AppHelmet from '../../components/AppHelmet';
 import { AuthContext } from "../../AuthContext";
 import { PriceContext } from "../../PriceContext";
 import {
@@ -324,10 +325,12 @@ export default function KoraPaymentsV1({ setUserData }) {
     { id: "weekly", value: 800, label: "7 Days VIP", period: "Weekly" },
     { id: "monthly", value: 2000, label: "30 Days VIP", period: "Monthly" },
     { id: "yearly", value: 7500, label: "1 Year VIP", period: "Yearly" },
-  ];
+  ]; 
 
   return (
     <div className="payment-container">
+      <AppHelmet title="Payment" location="/pay" />
+
       <div className="payment-glass">
       <div className="country-selector" style={{ marginBottom: '20px' }}>
         <div
